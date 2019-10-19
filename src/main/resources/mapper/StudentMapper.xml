@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.liqingrui.student.dao.StudentDao">
+    <select id="selectList" resultType="com.liqingrui.student.model.Student">
+        select * from t_student
+        <where>
+            <if test="student.name!=null">
+                name like '%${student.name}%'
+            </if>
+            <if test="student.ageStart!=null">
+                and age>=${student.ageStart}
+            </if>
+            <if test="student.ageEnd!=null">
+                and age &lt;=${student.ageEnd}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+		insert into t_student(name,sex,age,birthday,header_img,classes_id,province_id,city_id,area_id,introduction,create_time)
+		values (#{student.name},#{student.sex},#{student.age},#{student.birthday},#{student.header_img},#{student.classes_id},#{student.province_id},#{student.city_id},#{student.area_id},#{student.introduction},#{student.create_time})
+	</insert>
+
+    <update id="update">
+		update t_student set
+			name=#{student.name},
+			age=#{student.age},
+			sex=#{student.sex},
+			birthday=#{student.birthday},
+			header_img=#{student.header_img},
+			classes_id=#{student.classes_id},
+			province_id=#{student.province_id},
+			city_id=#{student.city_id},
+			area_id=#{student.area_id},
+			introduction=#{student.introduction}
+			where id = #{student.id}
+	</update>
+</mapper>
